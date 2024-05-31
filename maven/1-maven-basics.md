@@ -94,7 +94,7 @@ graph TD
 - Located on the local machine.
 - Default location: ~/.m2/repository.
 - Used to store dependencies that have been downloaded or installed locally.
-- External Repository
+### External Repository
 - Central Repository: Maven's default repository, hosted by the Apache Software Foundation.
 - Remote Repositories: Can be configured in pom.xml or settings.xml to use other repositories (e.g., corporate or third-party repositories).
   
