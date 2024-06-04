@@ -68,124 +68,124 @@ mvn post-site  # Perform tasks after site generation.
 mvn site-deploy # Deploy generated site documentation to the specified server.
 ```
 ## Dependency Commands
-Dependency Tree
-mvn dependency:tree: Displays the dependency tree for the project.
-sh
-Copy code
+### Dependency Tree
+- mvn dependency:tree: Displays the dependency tree for the project.
+```sh
 mvn dependency:tree
-Dependency List
-mvn dependency:list: Lists all dependencies used by the project.
-sh
-Copy code
+```
+### Dependency List
+- mvn dependency:list: Lists all dependencies used by the project.
+```sh
 mvn dependency:list
-Dependency Analysis
-mvn dependency:analyze: Analyzes the project's dependencies and identifies used and unused ones.
-sh
-Copy code
+```
+### Dependency Analysis
+- mvn dependency:analyze: Analyzes the project's dependencies and identifies used and unused ones.
+```sh
 mvn dependency:analyze
-Project Commands
-Archetype Creation
-mvn archetype:generate: Generates a new project based on an archetype.
-sh
-Copy code
+```
+## Project Commands
+### Archetype Creation
+- mvn archetype:generate: Generates a new project based on an archetype.
+```sh
 mvn archetype:generate
-Validate
-mvn validate: Validates the project is correct and all necessary information is available.
-sh
-Copy code
+```
+### Validate
+- mvn validate: Validates the project is correct and all necessary information is available.
+```sh
 mvn validate
-Project Info
-mvn help:describe: Describes the attributes of a specified goal or plugin.
-sh
-Copy code
+```
+### Project Info
+- mvn help:describe: Describes the attributes of a specified goal or plugin.
+```sh
 mvn help:describe -Dplugin=org.apache.maven.plugins:maven-compiler-plugin
-Project Help
-mvn help:effective-pom: Displays the effective POM for the current build.
-sh
-Copy code
+```
+### Project Help
+- mvn help:effective-pom: Displays the effective POM for the current build.
+```sh
 mvn help:effective-pom
-Repository Commands
-Repository Index
-mvn repository:index: Creates an index of the repository.
-sh
-Copy code
+```
+## Repository Commands
+### Repository Index
+- mvn repository:index: Creates an index of the repository.
+```sh
 mvn repository:index
-Dependency Resolution
-mvn dependency:resolve: Resolves and displays the dependencies for the project.
-sh
-Copy code
+```
+### Dependency Resolution
+- mvn dependency:resolve: Resolves and displays the dependencies for the project.
+```sh
 mvn dependency:resolve
-Plugin Commands
-Plugin List
-mvn plugin:list: Lists all plugins used in the project.
-sh
-Copy code
+```
+## Plugin Commands
+### Plugin List
+- mvn plugin:list: Lists all plugins used in the project.
+```sh
 mvn plugin:list
-Plugin Help
-mvn help:describe: Provides detailed information about a plugin goal.
-sh
-Copy code
+```
+### Plugin Help
+- mvn help:describe: Provides detailed information about a plugin goal.
+```sh
 mvn help:describe -Dplugin=org.apache.maven.plugins:maven-compiler-plugin
-Plugin Configuration
-mvn plugin:configuration: Displays the effective configuration for a plugin.
-sh
-Copy code
+```
+### Plugin Configuration
+- mvn plugin:configuration: Displays the effective configuration for a plugin.
+```sh
 mvn help:effective-settings
-Archetype Commands
-Generate Project
-mvn archetype:generate: Generates a project from an archetype.
-sh
-Copy code
+```
+## Archetype Commands
+### Generate Project
+- mvn archetype:generate: Generates a project from an archetype.
+```sh
 mvn archetype:generate -DgroupId=com.example -DartifactId=my-app -DarchetypeArtifactId=maven-archetype-quickstart -DinteractiveMode=false
-Site Commands
-Site Generation
-mvn site: Generates the project’s site documentation.
-sh
-Copy code
+```
+## Site Commands
+### Site Generation
+- mvn site: Generates the project’s site documentation.
+```sh
 mvn site
-Site Deployment
-mvn site:deploy: Deploys the generated site to the specified server.
-sh
-Copy code
+```
+### Site Deployment
+- mvn site:deploy: Deploys the generated site to the specified server.
+```sh
 mvn site:deploy
-Other Useful Commands
-Effective POM
-mvn help:effective-pom: Displays the effective POM configuration after inheritance and active profiles are applied.
-sh
-Copy code
+```
+## Other Useful Commands
+### Effective POM
+- mvn help:effective-pom: Displays the effective POM configuration after inheritance and active profiles are applied.
+```sh
 mvn help:effective-pom
-Effective Settings
-mvn help:effective-settings: Displays the effective settings after merging global and user-level settings.
-sh
-Copy code
+```
+### Effective Settings
+- mvn help:effective-settings: Displays the effective settings after merging global and user-level settings.
+```sh
 mvn help:effective-settings
-Clean Cache
-mvn dependency:purge-local-repository: Cleans the local repository of project artifacts.
-sh
-Copy code
+```
+### Clean Cache
+- mvn dependency:purge-local-repository: Cleans the local repository of project artifacts.
+```sh
 mvn dependency:purge-local-repository
-Debug Mode
-mvn -X: Runs Maven in debug mode, providing detailed logs.
-sh
-Copy code
+```
+### Debug Mode
+- mvn -X: Runs Maven in debug mode, providing detailed logs.
+```sh
 mvn -X clean install
-Skip Tests
-mvn -DskipTests: Skips running tests during the build.
-sh
-Copy code
+```
+### Skip Tests
+- mvn -DskipTests: Skips running tests during the build.
+```sh
 mvn clean install -DskipTests
-Run Tests
-mvn test: Runs tests using the configured testing framework.
-sh
-Copy code
+```
+### Run Tests
+- mvn test: Runs tests using the configured testing framework.
+```sh
 mvn test
-Clean and Install
-mvn clean install: Cleans the project and then installs the package into the local repository.
-sh
-Copy code
+```
+### Clean and Install
+- mvn clean install: Cleans the project and then installs the package into the local repository.
+```sh
 mvn clean install
-Profiles
-mvn -P<profile-name>: Activates a specific build profile.
-sh
-Copy code
+```
+### Profiles
+- mvn -P<profile-name>: Activates a specific build profile.
+```sh
 mvn clean install -Pproduction
+```
