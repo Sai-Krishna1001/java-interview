@@ -82,7 +82,7 @@ Every class in Java inherits methods from the `Object` class. The key methods in
 ---
 
 ### 9. `equals()` Method vs `==` Operator
-- `==` compares **memory references** (shallow comparison).
+- `==` checks if two object references point to the same memory location (shallow comparison).
 - `equals()` by default also compares references but can be overridden for **content-based comparison** (deep comparison).
 - By default, `equals()` does a reference check (`==`) in `Object` class.
 - `String`, primitive, wrapper classes (`Integer`, `Double`, etc.), and `Enum` override `equals()` to compare actual values instead of memory locations.
