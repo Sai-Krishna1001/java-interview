@@ -147,6 +147,3 @@ A **Daemon Thread** runs in the background and terminates when all user threads 
 - `CompletableFuture` supports non-blocking async programming.
 - `Future.get()` blocks until a result is available.
 
----
-
-This document provides an in-depth understanding of Java Multithreading for interviews. Let me know if you need more refinements!
