@@ -1,222 +1,152 @@
-# Java Threads and Synchronization
+# Multithreading in Java - Interview Questions and Answers
 
-## 1) How to Create Threads
+## 1. What is Multithreading in Java?
+Multithreading is the ability of a program to execute multiple threads concurrently to improve performance and responsiveness.
 
-### Different Ways to Create a Thread:
-There are two ways to create a thread in Java:
+### Key Points:
+- Java provides built-in support for multithreading using the `Thread` class and `Runnable` interface.
+- Threads run independently but share the same process memory.
+- JVM schedules threads using a priority-based preemptive scheduling algorithm.
 
-1. **Extending the `Thread` class**
-2. **Implementing the `Runnable` interface**
+## 2. What are the different ways to create a thread in Java?
+1. **Extending the `Thread` class**: Override the `run()` method.
+2. **Implementing the `Runnable` interface**: Pass an instance to `Thread`.
+3. **Using `Callable` and `Future`**: Returns a result and handles exceptions.
+4. **Using `ExecutorService`**: Manages thread execution more efficiently.
 
-### 1.1 Extending the `Thread` Class
-- A class extends `Thread` and overrides the `run()` method where the thread's logic resides.
-- Create an instance of the class and invoke `start()` to begin execution.
+### Hidden Rules & Facts:
+- Implementing `Runnable` is preferred over extending `Thread` to allow multiple inheritance.
+- `Callable` is used when a task needs to return a result.
+- `ExecutorService` manages thread pools for better performance and resource management.
 
-#### Example:
-```java
-class MyThread extends Thread {
-    public void run() {
-        System.out.println("Thread is running...");
-    }
+## 3. What is the difference between Process and Thread?
+| Feature    | Process | Thread |
+|-----------|---------|--------|
+| Memory    | Separate memory space | Shared memory space |
+| Communication | Inter-process communication (IPC) required | Direct memory access |
+| Creation  | Expensive | Lightweight |
+| Execution | Independent | Can be interdependent |
 
-    public static void main(String[] args) {
-        MyThread t1 = new MyThread();
-        t1.start(); // Starts a new thread
-    }
-}
-```
+## 4. What are the different thread states in Java?
+Java threads go through six states:
+1. **NEW** – Created but not started.
+2. **RUNNABLE** – Ready to run or running.
+3. **BLOCKED** – Waiting for a monitor lock.
+4. **WAITING** – Waiting indefinitely for another thread.
+5. **TIMED_WAITING** – Waiting for a specific time.
+6. **TERMINATED** – Execution finished.
 
-### 1.2 Implementing the `Runnable` Interface
-- Implements `Runnable` to allow class extension flexibility (Java doesn’t support multiple inheritance).
-- Implement the `run()` method and pass an instance of the class to a `Thread` object.
+### Important Facts:
+- A thread in `BLOCKED` state waits for a resource lock.
+- `WAITING` and `TIMED_WAITING` states require another thread's intervention.
 
-#### Example:
-```java
-class MyRunnable implements Runnable {
-    public void run() {
-        System.out.println("Runnable thread is running...");
-    }
+## 5. What is the difference between `synchronized` and `Lock`?
+| Feature        | `synchronized` | `Lock` (ReentrantLock) |
+|---------------|--------------|------------------|
+| Flexibility   | Implicit locking | Explicit locking |
+| Interruptible | No | Yes |
+| Fairness      | No fairness guarantee | Can be fair |
+| Try-Lock      | Not available | Available |
+| Condition Variables | Not available | Available |
 
-    public static void main(String[] args) {
-        MyRunnable runnable = new MyRunnable();
-        Thread t1 = new Thread(runnable);
-        t1.start();
-    }
-}
-```
+### Key Points:
+- `synchronized` blocks or methods use intrinsic locks (monitor lock).
+- `ReentrantLock` provides better control over locks with fairness policies.
+- `Lock.tryLock()` allows acquiring locks without blocking.
 
-**Hidden Fact:** 
-- Directly calling `run()` instead of `start()` will execute the method on the main thread rather than a new thread.
+## 6. What is the difference between `wait()`, `notify()`, and `notifyAll()`?
+| Method    | Description |
+|-----------|-------------|
+| `wait()` | Releases lock and waits until notified. |
+| `notify()` | Wakes up one waiting thread. |
+| `notifyAll()` | Wakes up all waiting threads. |
 
----
+### Hidden Rules:
+- `wait()`, `notify()`, and `notifyAll()` must be called inside a `synchronized` block.
+- `notify()` does not guarantee which thread gets woken up.
 
-## 2) What is Synchronization?
+## 7. What is Thread Safety, and how do you achieve it?
+Thread safety ensures that multiple threads can access shared resources without causing inconsistencies.
 
-### 2.1 Thread Synchronization
-- When multiple threads access shared resources, data inconsistency may occur.
-- Synchronization prevents multiple threads from modifying the same data simultaneously.
-- Java provides the `synchronized` keyword to ensure only one thread executes a synchronized method or block at a time.
+### Ways to Achieve Thread Safety:
+1. **Synchronization (`synchronized`)** – Ensures mutual exclusion.
+2. **Volatile Keyword** – Ensures visibility of changes across threads.
+3. **Atomic Variables** – Provides lock-free thread safety (`AtomicInteger`, `AtomicBoolean`).
+4. **Thread-safe Collections** – `ConcurrentHashMap`, `CopyOnWriteArrayList`.
+5. **Thread-local Storage (`ThreadLocal`)** – Provides thread-confined variables.
 
-#### Example:
-```java
-class Counter {
-    private int count = 0;
-    
-    public synchronized void increment() {
-        count++;
-    }
-    
-    public int getCount() {
-        return count;
-    }
-}
+### Important Facts:
+- `volatile` does not guarantee atomicity, only visibility.
+- `synchronized` can cause performance issues if overused.
+- `ConcurrentHashMap` provides better performance than `synchronized` HashMap.
 
-public class SyncExample {
-    public static void main(String[] args) throws InterruptedException {
-        Counter counter = new Counter();
-        
-        Thread t1 = new Thread(() -> {
-            for (int i = 0; i < 1000; i++) counter.increment();
-        });
-        
-        Thread t2 = new Thread(() -> {
-            for (int i = 0; i < 1000; i++) counter.increment();
-        });
-        
-        t1.start();
-        t2.start();
-        t1.join();
-        t2.join();
-        
-        System.out.println("Final count: " + counter.getCount());
-    }
-}
-```
+## 8. What is the difference between `volatile` and `synchronized`?
+| Feature | `volatile` | `synchronized` |
+|---------|------------|---------------|
+| Atomicity | No | Yes |
+| Visibility | Yes | Yes |
+| Locking | No | Yes |
+| Performance | Better | Can be slow |
 
-**Hidden Fact:**
-- Synchronization introduces performance overhead due to context switching.
+## 9. What are `ExecutorService` and Thread Pools?
+`ExecutorService` is a framework for managing a pool of worker threads efficiently.
 
----
+### Key Implementations:
+- `FixedThreadPool` – Fixed number of threads.
+- `CachedThreadPool` – Creates threads as needed.
+- `ScheduledThreadPool` – Supports scheduled execution.
 
-## 3) Class-Level Locks
+### Limits & Facts:
+- Using a thread pool is better than manually managing threads.
+- A large thread pool can cause excessive memory usage.
 
-### 3.1 What is a Class-Level Lock?
-- A lock associated with the class instead of an object.
-- If a thread acquires a class-level lock, no other thread can access synchronized static methods.
+## 10. What are Deadlock, Livelock, and Starvation?
+| Concept | Description |
+|---------|-------------|
+| Deadlock | Circular dependency causes threads to block each other. |
+| Livelock | Threads keep changing state but never proceed. |
+| Starvation | Low-priority threads never execute due to high-priority threads. |
 
-#### Example:
-```java
-class SharedResource {
-    public static synchronized void staticMethod() {
-        System.out.println(Thread.currentThread().getName() + " is executing staticMethod");
-        try { Thread.sleep(1000); } catch (InterruptedException e) {}
-    }
-}
+### Important Facts:
+- Deadlocks occur when multiple threads hold locks in a circular manner.
+- Livelock happens when threads respond to each other’s state but make no progress.
+- Starvation can be prevented using fair locking mechanisms (`ReentrantLock(true)`).
 
-public class ClassLevelLockExample {
-    public static void main(String[] args) {
-        Thread t1 = new Thread(SharedResource::staticMethod, "Thread 1");
-        Thread t2 = new Thread(SharedResource::staticMethod, "Thread 2");
-        
-        t1.start();
-        t2.start();
-    }
-}
-```
+## 11. What is Fork/Join Framework?
+The **Fork/Join Framework** in Java 7+ is used for parallel computation by splitting tasks into subtasks.
 
-**Hidden Fact:**
-- Even if different objects are created, synchronized static methods will still share the same class-level lock.
+### Key Points:
+- Uses `ForkJoinPool` to execute recursive tasks.
+- Splits tasks into smaller subtasks (Fork) and combines results (Join).
+- Works well for divide-and-conquer problems.
 
----
+## 12. What is a Daemon Thread?
+A **Daemon Thread** runs in the background and terminates when all user threads finish execution.
 
-## 4) Synchronized Blocks
+### Key Points:
+- Use `thread.setDaemon(true)` to make a thread a daemon.
+- JVM terminates daemon threads automatically when no user thread is running.
+- Garbage Collector (GC) runs as a daemon thread.
 
-### 4.1 What are Synchronized Blocks?
-- Instead of synchronizing an entire method, we can synchronize only the critical section.
-- This improves performance by allowing multiple threads to execute non-critical parts simultaneously.
+## 13. What is the `ThreadLocal` class?
+`ThreadLocal` provides thread-specific storage of variables, ensuring each thread gets a unique copy.
 
-#### Example:
-```java
-class SyncBlock {
-    public void printNumbers() {
-        synchronized (this) { // Lock only this block
-            for (int i = 1; i <= 5; i++) {
-                System.out.println(Thread.currentThread().getName() + " - " + i);
-                try { Thread.sleep(500); } catch (InterruptedException e) {}
-            }
-        }
-    }
-}
+### Important Facts:
+- Useful for per-thread data like user sessions, database connections.
+- Avoid memory leaks by calling `remove()` after usage.
 
-public class SyncBlockExample {
-    public static void main(String[] args) {
-        SyncBlock obj = new SyncBlock();
-        
-        Thread t1 = new Thread(obj::printNumbers, "Thread 1");
-        Thread t2 = new Thread(obj::printNumbers, "Thread 2");
-        
-        t1.start();
-        t2.start();
-    }
-}
-```
+## 14. How does `Future` and `CompletableFuture` differ?
+| Feature | `Future` | `CompletableFuture` |
+|---------|---------|----------------|
+| Blocking | Yes | No |
+| Chaining | No | Yes |
+| Exception Handling | No | Yes |
+| Parallel Execution | No | Yes |
 
-**Hidden Fact:**
-- Using `this` in a synchronized block locks the current instance, whereas using a class reference (`ClassName.class`) locks the entire class.
+### Key Points:
+- `CompletableFuture` supports non-blocking async programming.
+- `Future.get()` blocks until a result is available.
 
 ---
 
-## 5) Thread Communication
-
-### 5.1 How Do Threads Communicate?
-- Threads use `wait()`, `notify()`, and `notifyAll()` for communication.
-- `wait()`: Releases the lock and moves the thread to the waiting state.
-- `notify()`: Wakes up one waiting thread.
-- `notifyAll()`: Wakes up all waiting threads.
-
-#### Example:
-```java
-class Message {
-    private String msg;
-    private boolean hasMessage = false;
-    
-    public synchronized void write(String message) {
-        while (hasMessage) {
-            try { wait(); } catch (InterruptedException e) {}
-        }
-        this.msg = message;
-        hasMessage = true;
-        notify();
-    }
-    
-    public synchronized String read() {
-        while (!hasMessage) {
-            try { wait(); } catch (InterruptedException e) {}
-        }
-        hasMessage = false;
-        notify();
-        return msg;
-    }
-}
-
-public class ThreadCommunicationExample {
-    public static void main(String[] args) {
-        Message message = new Message();
-        
-        Thread writer = new Thread(() -> {
-            message.write("Hello from Writer");
-        });
-        
-        Thread reader = new Thread(() -> {
-            System.out.println("Reader got message: " + message.read());
-        });
-        
-        writer.start();
-        reader.start();
-    }
-}
-```
-
-**Hidden Fact:**
-- `wait()`, `notify()`, and `notifyAll()` must be used inside a synchronized block; otherwise, an `IllegalMonitorStateException` will be thrown.
-
+This document provides an in-depth understanding of Java Multithreading for interviews. Let me know if you need more refinements!
